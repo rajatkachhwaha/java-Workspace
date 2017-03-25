@@ -1,0 +1,108 @@
+package banksystem;
+
+import java.io.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class BankSystem
+ */
+@WebServlet("/BankSystem")
+public class BankSystem extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	PreparedStatement pst1,pst2;
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public BankSystem() 
+    {
+    	try
+        {
+      	Class.forName("com.mysql.jdbc.Driver");
+      	Connection cn;
+      	cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/bank","root","rajat_16");
+      	
+      	pst1=cn.prepareStatement("select * from cust where actno=?");
+      	pst2=cn.prepareStatement("select * from trans where actno=?");
+        }
+        catch(ClassNotFoundException e)
+        {
+         System.err.println("Driver Not Found..");
+         System.exit(1);
+        }
+        catch(SQLException e)
+        {
+         System.err.println("SQL failed..");
+         System.exit(1);
+        } 
+     
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
+		 PrintWriter pw=response.getWriter();
+		 
+		 try
+		 {
+		  String act=request.getParameter("act");
+		  Integer n=Integer.valueOf(act);
+		  pst1.setInt(1,n);
+		  ResultSet rs=pst1.executeQuery();
+		 
+		  String s="<html><head><title>Customer Details</title></head>"+
+				   "<body bgcolor=yellow><br><br><center><font color=blue><h1>Dmatics Bank of Jodhpur</h1></font>"+
+				   "<br><br><br><font color=red><h2>Acc.No. : "+act+"</h2></font><br><br>"+
+				   //"<br><br><br><font color=red><h2>Acc.No. : "+rs.getString("name")+"</h2></font><br><br>"+
+				   "<table colspan=4 border=1><font color=blue>"+
+				   "<tr>"+
+				    "<th>Acc. No</th>"+
+				    "<th>Name</th>"+
+				    "<th>Transaction</th>"+
+				    "<th>Trans.Type</th>"+
+				    "<th>Balance</th>"+
+				    "</tr>";
+		  while(rs.next())
+		  {
+			 
+			pst2.setInt(1,rs.getInt("actno"));
+			ResultSet rm=pst2.executeQuery();
+			
+			while(rm.next())
+			{
+				s=s+"<tr>"+
+			               "<td>"+rs.getInt("actno")+"</td>"+
+					       "<td>"+rs.getString("name")+"</td>"+
+				           "<td>"+rm.getInt("amt")+"</td>"+
+			               "<td>"+rm.getString("ttype")+"</td>"+
+					       "<td>"+rs.getInt("balance")+"</td>";
+			}
+			
+		  }
+		         
+		  s=s+"</center></body></html>";
+		  
+		  pw.println(s);
+		 }
+		 catch(SQLException e){}	
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+}

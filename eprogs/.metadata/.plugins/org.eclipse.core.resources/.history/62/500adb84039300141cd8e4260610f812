@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>Customer Details</title>
+</head>
+<body bgcolor="blue"><form action="BankSystem"><center>
+<br><br><br><H2><font color="yellow">DMATICS BANK OF JODHPUR</font></H2>
+<br><br><br>
+<table>
+ <tr>
+  <td><h3><font color="white">Enter Account No.</font></h3></td>
+  <td><h3><input type="text" name="act"/></h3></td>
+ </tr>
+ <tr>
+  <td><h3>&nbsp;</h3></td>
+  <td><h3><input type="submit" name="submit" value="Show Details"/></h3></td>
+ </tr> 
+</table></center></form>
+</body>
+</html>

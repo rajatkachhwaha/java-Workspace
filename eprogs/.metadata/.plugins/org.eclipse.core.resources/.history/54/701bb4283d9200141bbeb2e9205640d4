@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>Query Branch</title>
+</head>
+<body bgcolor="blue"><center>
+<br><br><br><H2><font color="yellow">DETROIT COLLEGE OF ENGINEERING STUDIES</font></H2>
+<br><br><br>
+<table>
+ <tr>
+  <td><h3><font color="white">Enter Branch Code</font></h3></td>
+  <td><h3><input type="text" name="brn"/></h3></td>
+ </tr>
+ <tr>
+  <td><h3>&nbsp;</h3></td>
+  <td><h3><input type="submit" name="submit" value="Get Result for Branch"/></h3></td>
+ </tr> 
+</table></center>
+</body>
+</html>
