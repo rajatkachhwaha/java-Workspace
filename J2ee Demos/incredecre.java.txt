@@ -1,0 +1,8 @@
+class IncreeDecree
+{
+ public static void main(Static arg[])
+ {
+  int x=5;
+  System.out.println("postfix result is "+++x"prefic result is "+x++);
+ }
+}  
